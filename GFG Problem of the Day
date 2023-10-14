@@ -1,0 +1,55 @@
+Q: Given two Binary Search Trees. Find the nodes that are common in both of them, ie- find the intersection of the two BSTs.
+
+Note: Return the common nodes in sorted order.
+
+Example 1:
+
+Input:
+BST1:
+                  5
+               /     \
+             1        10
+           /   \      /
+          0     4    7
+                      \
+                       9
+BST2:
+                10 
+              /    \
+             7     20
+           /   \ 
+          4     9
+Output: 4 7 9 10;
+Solution : AS we know that Inorder Traversal of BST is always sorted . So we will store Inorder traversal of both the BST.Then find the common Intersection bw two arrays;
+class Solution
+{
+    public:
+    void Inorder(Node* root,vector<int>&v){
+        if(!root)  return;
+        Inorder(root->left,v);
+        v.push_back(root->data);
+        Inorder(root->right,v);
+    }
+    vector <int> findCommon(Node *root1, Node *root2)
+    {
+     vector<int>ans1;
+     vector<int>ans2;
+      Inorder(root1,ans1);
+      Inorder(root2,ans2);
+     vector<int>res;
+     int i=0 ,j=0;
+     while(i<ans1.size() &&  j<ans2.size()){
+         if(ans1[i] < ans2[j]){
+             i++;
+         }
+         else if(ans1[i] > ans2[j]){
+             j++;
+         }
+         else{
+             res.push_back(ans1[i]);
+             i++;
+             j++;
+         }
+     }
+     return res;
+    }
